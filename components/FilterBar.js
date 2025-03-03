@@ -12,6 +12,8 @@ export default function FilterBar({ onFilter }) {
     DescuentoMax: ""
   });
 
+  const tipos = ["", "Vehicle", "Level", "Season Pass", "Costume", "Weapons"];
+
   const handleChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
@@ -23,13 +25,59 @@ export default function FilterBar({ onFilter }) {
 
   return (
     <div className="bg-gray-100 p-4 rounded-md shadow-md flex gap-4">
-      <input type="text" name="Nombre" placeholder="Buscar..." className="p-2 border rounded w-full" onChange={handleChange} />
-      <input type="text" name="Tipo" placeholder="Tipo" className="p-2 border rounded" onChange={handleChange} />
-      <input type="number" name="PrecioMin" placeholder="Precio Mín." className="p-2 border rounded" onChange={handleChange} />
-      <input type="number" name="PrecioMax" placeholder="Precio Máx." className="p-2 border rounded" onChange={handleChange} />
-      <input type="number" name="DescuentoMin" placeholder="Desc. Mín." className="p-2 border rounded" onChange={handleChange} />
-      <input type="number" name="DescuentoMax" placeholder="Desc. Máx." className="p-2 border rounded" onChange={handleChange} />
-      <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={applyFilters}>Filtrar</button>
+      <input 
+        type="text" 
+        name="Nombre" 
+        placeholder="Buscar..." 
+        className="p-2 border rounded w-full" 
+        onChange={handleChange} 
+      />
+      
+      <select 
+        name="Tipo" 
+        className="p-2 border rounded" 
+        onChange={handleChange} 
+        value={filters.Tipo}
+      >
+        {tipos.map((tipo) => (
+          <option key={tipo} value={tipo}>
+            {tipo || "Seleccionar Tipo"}
+          </option>
+        ))}
+      </select>
+
+      <input 
+        type="number" 
+        name="PrecioMin" 
+        placeholder="Precio Mín." 
+        className="p-2 border rounded" 
+        onChange={handleChange} 
+      />
+      <input 
+        type="number" 
+        name="PrecioMax" 
+        placeholder="Precio Máx." 
+        className="p-2 border rounded" 
+        onChange={handleChange} 
+      />
+      <input 
+        type="number" 
+        name="DescuentoMin" 
+        placeholder="Desc. Mín." 
+        className="p-2 border rounded" 
+        onChange={handleChange} 
+      />
+      <input 
+        type="number" 
+        name="DescuentoMax" 
+        placeholder="Desc. Máx." 
+        className="p-2 border rounded" 
+        onChange={handleChange} 
+      />
+
+      <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={applyFilters}>
+        Filtrar
+      </button>
     </div>
   );
 }
