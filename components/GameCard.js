@@ -1,6 +1,15 @@
 export default function GameCard({ game }) {
+  const handleClick = () => {
+    if (game.LinkCompra) {
+      window.open(game.LinkCompra, "_blank"); // Abre el enlace en una nueva pestaña
+    }
+  };
+
   return (
-    <div className="border rounded-lg p-4 shadow-lg bg-white">
+    <div 
+      className="border rounded-lg p-4 shadow-lg bg-white cursor-pointer hover:shadow-xl transition"
+      onClick={handleClick} // Hace que toda la tarjeta sea clickeable
+    >
       <img 
         src={game.Imagen || "/placeholder.jpg"} 
         alt={game.Nombre} 
