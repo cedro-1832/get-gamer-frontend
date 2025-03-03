@@ -3,14 +3,16 @@
 import { useState } from "react";
 
 export default function FilterBar({ onFilter, setSort }) {
-  const [filters, setFilters] = useState({
+  const initialFilters = {
     Tipo: "",
     PrecioMin: "",
     PrecioMax: "",
     Nombre: "",
     DescuentoMin: "",
     DescuentoMax: ""
-  });
+  };
+
+  const [filters, setFilters] = useState(initialFilters);
 
   const tipos = ["", "Vehicle", "Level", "Season Pass", "Costume", "Weapons"];
   const sortOptions = [
@@ -30,6 +32,12 @@ export default function FilterBar({ onFilter, setSort }) {
     onFilter(query); // Llama a la función para obtener los juegos filtrados
   };
 
+  const resetFilters = () => {
+    setFilters(initialFilters); // Restablecer filtros al estado inicial
+    setSort(""); // Restablecer ordenamiento
+    onFilter({}); // Llamar a la función para recargar los juegos sin filtros
+  };
+
   return (
     <div className="bg-gray-100 p-4 rounded-md shadow-md flex flex-wrap gap-4">
       <input 
@@ -37,6 +45,7 @@ export default function FilterBar({ onFilter, setSort }) {
         name="Nombre" 
         placeholder="Buscar..." 
         className="p-2 border rounded w-full md:w-1/4" 
+        value={filters.Nombre}
         onChange={handleChange} 
       />
       
@@ -58,6 +67,7 @@ export default function FilterBar({ onFilter, setSort }) {
         name="PrecioMin" 
         placeholder="Precio Mín." 
         className="p-2 border rounded w-full md:w-1/6" 
+        value={filters.PrecioMin}
         onChange={handleChange} 
       />
       <input 
@@ -65,6 +75,7 @@ export default function FilterBar({ onFilter, setSort }) {
         name="PrecioMax" 
         placeholder="Precio Máx." 
         className="p-2 border rounded w-full md:w-1/6" 
+        value={filters.PrecioMax}
         onChange={handleChange} 
       />
       <input 
@@ -72,6 +83,7 @@ export default function FilterBar({ onFilter, setSort }) {
         name="DescuentoMin" 
         placeholder="Desc. Mín." 
         className="p-2 border rounded w-full md:w-1/6" 
+        value={filters.DescuentoMin}
         onChange={handleChange} 
       />
       <input 
@@ -79,6 +91,7 @@ export default function FilterBar({ onFilter, setSort }) {
         name="DescuentoMax" 
         placeholder="Desc. Máx." 
         className="p-2 border rounded w-full md:w-1/6" 
+        value={filters.DescuentoMax}
         onChange={handleChange} 
       />
 
@@ -94,8 +107,18 @@ export default function FilterBar({ onFilter, setSort }) {
         ))}
       </select>
 
-      <button className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto" onClick={applyFilters}>
+      <button 
+        className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto" 
+        onClick={applyFilters}
+      >
         Filtrar
+      </button>
+
+      <button 
+        className="bg-gray-400 text-white px-4 py-2 rounded w-full md:w-auto" 
+        onClick={resetFilters}
+      >
+        Limpiar Filtros
       </button>
     </div>
   );
