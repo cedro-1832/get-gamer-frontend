@@ -43,8 +43,11 @@ export default function Home() {
         <p className="text-center">Cargando juegos...</p>
       ) : (
         <div className="grid grid-cols-3 gap-6 mt-6">
-          {games.length > 0 ? games.map(game => <GameCard key={game.id} game={game} />) : 
-            <p className="text-center col-span-3 text-gray-500">No hay juegos disponibles.</p>}
+          {games.length > 0 ? games.map((game, index) => (
+            <GameCard key={game.id || `game-${index}`} game={game} />
+          )) : (
+            <p className="text-center col-span-3 text-gray-500">No hay juegos disponibles.</p>
+          )}
         </div>
       )}
     </div>
