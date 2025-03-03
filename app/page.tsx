@@ -9,12 +9,15 @@ const API_URL = "https://85r1nm2npg.execute-api.us-east-1.amazonaws.com/dev/api/
 export default function Home() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sort, setSort] = useState(""); // Estado para ordenar
 
   const fetchGames = async (filters = {}) => {
     setLoading(true);
 
-    const queryString = new URLSearchParams(filters).toString();
-    const url = `${API_URL}?${queryString}`;
+    const params = new URLSearchParams(filters);
+    if (sort) params.append("sort", sort); // Agrega el parámetro de orden si está definido
+
+    const url = `${API_URL}?${params.toString()}`;
 
     try {
       const res = await fetch(url, {
@@ -33,12 +36,12 @@ export default function Home() {
 
   useEffect(() => {
     fetchGames();
-  }, []);
+  }, [sort]); // Se vuelve a ejecutar cuando cambia el orden
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold text-center my-4">Catálogo de Juegos</h1>
-      <FilterBar onFilter={fetchGames} />
+      <FilterBar onFilter={fetchGames} setSort={setSort} />
       {loading ? (
         <p className="text-center">Cargando juegos...</p>
       ) : (
